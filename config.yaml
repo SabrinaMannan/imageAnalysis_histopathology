@@ -1,0 +1,16 @@
+project:
+  name: EED-Villus-Morphometry
+  version: 0.1.0
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  output_dir: outputs
+
+image:
+  supported_formats:
+    - ".jpg"
+    - ".jpeg"
+    - ".png"
+    - ".tif"
+    - ".tiff"
