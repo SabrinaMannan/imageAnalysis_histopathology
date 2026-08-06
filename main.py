@@ -1,6 +1,8 @@
 from src.config import load_config
 from src.image_io import ImageLoader
 from src.dataset_summary import DatasetSummary
+from pathlib import Path
+from src.tissue import TissueSegmenter
 
 
 def main():
@@ -41,6 +43,42 @@ def main():
 
     print("\nDataset summary saved to outputs/dataset_summary.csv")
 
+# Tissue Segmentation Test
+
+
+    segmenter = TissueSegmenter()
+
+    dataset = datasets[0]
+
+    image_path = loader.get_images(dataset)[0]
+
+    image = loader.load_image(image_path)
+
+    mask = segmenter.create_mask(image)
+
+    contours = segmenter.find_tissue(mask)
+
+    overlay = segmenter.draw_contours(
+        image,
+        contours
+    )
+
+    final_mask = segmenter.create_final_mask(
+        image,
+        contours
+    )
+
+    segmenter.save_mask(
+        final_mask,
+        "outputs/masks/test_mask.jpg"
+    )
+
+    segmenter.save_image(
+        overlay,
+        "outputs/overlays/test_overlay.jpg"
+    )
+
+    print(f"Large tissue fragments detected: {len(contours)}")
 
 if __name__ == "__main__":
     main()
