@@ -21,7 +21,7 @@ class DatasetSummary:
             return
 
         height, width, channels = image.shape
-
+ 
         self.records.append(
             {
                 "dataset": dataset_name,
