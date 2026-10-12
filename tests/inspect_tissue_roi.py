@@ -69,16 +69,16 @@ if not calibration_csv.is_file():
 #    without decoding the full pixel array
 # --------------------------------------------------
 
-with Image.open(image_path) as image:
-    original_width, original_height = image.size
+previous_limit = Image.MAX_IMAGE_PIXELS
 
-print("\n--- ORIGINAL IMAGE ---")
-print(f"File: {image_path.name}")
-print(
-    f"Original dimensions: "
-    f"{original_width:,} x {original_height:,}"
-)
+try:
+    Image.MAX_IMAGE_PIXELS = None
 
+    with Image.open(image_path) as image:
+        original_width, original_height = image.size
+
+finally:
+    Image.MAX_IMAGE_PIXELS = previous_limit
 
 # --------------------------------------------------
 # 4. Verify calibration record
